@@ -51,25 +51,26 @@ Resources:
             - dynamodb:Update*
             - dynamodb:PutItem
             Resource: arn:aws:dynamodb:*:*:table/*
+  MyBucket:
+    Type: AWS::S3::Bucket
+    Properties:
+      BucketName: miaw-migration-lectura-excel-imagenes-1
             
-  MyLambdaMiawMigration:
+  lambda-migration:
     Type: AWS::Serverless::Function
     Properties:
-       FunctionName: lambda-migration
-       Runtime: python3.6
-       CodeUri: ./build
-       Handler: lambda-migration.lambda_handler
-       Role: !GetAtt MyLambdaRole.Arn
-       Events:
+      FunctionName: lambda-migration
+      Runtime: python3.6
+      CodeUri: ./build
+      Handler: lambda-migration.lambda_handler
+      Role: !GetAtt MyLambdaRole.Arn
+      Events:
         S3Event:
           Type: S3
           Properties:
             Bucket: miaw-migration-lectura-excel-imagenes-1
             Events: s3:ObjectCreated:*
        
-  MyBucket:
-    Type: AWS::S3::Bucket
-    Properties:
-      BucketName: miaw-migration-lectura-excel-imagenes-1
+  
       
  
