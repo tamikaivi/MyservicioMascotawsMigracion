@@ -56,20 +56,21 @@ Resources:
     Properties:
       BucketName: miaw-migration-lectura-excel-imagenes-1
             
-  lambda-migration:
+  MyLambdaMiawMigration:
     Type: AWS::Serverless::Function
     Properties:
-      FunctionName: lambda-migration
+      FunctionName: lambdaMigration
       Runtime: python3.6
       CodeUri: ./build
-      Handler: lambda-migration.lambda_handler
+      Handler: lambdaMigration.lambda_handler
       Role: !GetAtt MyLambdaRole.Arn
       Events:
         S3Event:
           Type: S3
           Properties:
-            Bucket: miaw-migration-lectura-excel-imagenes-1
+            Bucket: !GetAtt MyBucket.Arn
             Events: s3:ObjectCreated:*
+            
        
   
       
